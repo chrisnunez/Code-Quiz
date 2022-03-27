@@ -17,6 +17,7 @@ var questions = [
     choiceB: 'choice 2',
     choiceC: 'choice 3',
     choiceD: 'choice 4',
+    correct: 'B'
 },
 { 
     Question: 'This is question 2',
@@ -24,6 +25,7 @@ var questions = [
     choiceB: 'choice 2',
     choiceC: 'choice 3',
     choiceD: 'choice 4',
+    correct: 'A'
 }
 ]
 
