@@ -13,32 +13,43 @@ var choiceContainer = document.querySelector('.Choices-container')
 var questions = [
     {
     Question: 'This is question 1',
-    choiceA: 'choice 1',
+    choiceA: 'this is choice 1',
     choiceB: 'choice 2',
     choiceC: 'choice 3',
     choiceD: 'choice 4',
-    correct: 'B'
+    correct: 'choice 4'
 },
 { 
     Question: 'This is question 2',
-    choiceA: 'choice 1',
+    choiceA: 'this is choice 1/2',
     choiceB: 'choice 2',
     choiceC: 'choice 3',
     choiceD: 'choice 4',
-    correct: 'A'
+    correct: 'choice 2'
 }
 ]
 
 
 
-// Gets question container
+
+// Gets DOM and creates variables for questions
 var questionContainer = document.querySelector('.Questions-container');
+var questionEl = document.getElementById('questionEl')
+var choice1 = document.getElementById('choice1')
+var choice2 = document.getElementById('choice2')
+var choice3 = document.getElementById('choice3') 
+var choice4 = document.getElementById('choice4')
+var questionLength = questions.length;
+var questionStart = 0;
+var score = 0;
+
+
+
 
 // Function that starts quiz and first question appears
-
 function startQuiz(){
-    
     questionContainer.style.display = 'block';
+    
 }
 
 
@@ -71,7 +82,7 @@ startbtn.addEventListener('click', function () {
     containerBtn.style.display = 'none';
     startQuiz()
     setTime()
-    
+
     }
 
 );
