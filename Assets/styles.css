@@ -1,0 +1,25 @@
+* {
+    
+    box-sizing: border-box;
+}
+
+ul {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+}
+
+
+#codingquiz, #rules, #start {
+    text-align: center;
+}
+
+.containerbtn {
+    text-align: center;
+}
+
+.Questions-container {
+    display: none;
+    text-align: center;
+}
+
