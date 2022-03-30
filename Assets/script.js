@@ -2,159 +2,181 @@
 
 
 //  Variables 
-var startbtn = document.querySelector('.startbtn') ;
+var startbtn = document.querySelector('.startbtn');
 var highScore = document.getElementById('highscore');
 var mainContainer = document.querySelector('.mainContainer');
 var containerBtn = document.querySelector('.containerbtn');
-// var choices = document.querySelectorAll('.choice');
-// var choiceContainer = document.querySelector('.Choices-container')
+var finallink = document.getElementById('finallink')
+var final = document.querySelector('#final')
+var finalbtn = document.querySelector('#finalbtn');
+var resetbtn = document.querySelector('#resetbtn')
+var start
 
 // Questions that will display after button is clicked
 var questions = [
     {
         // Question 0
-    Question: 'This is question 1',
-    choices: ['choice1', 'choice2', 'choice3', 'choice4'],
-    correctAnswer: 'choice3'
-},
-{ 
-    // Question 1
-    Question: 'This is question 2',
-    choices: ['choice1', 'choice2', 'choice3', 'choice4'],
-    correctAnswer: 'choice1'
-}
+        Question: 'What does NaN stand for?',
+        choices: ['Not a no', 'Not a number', 'Not a Numba', 'No ashton no'],
+        correctAnswer: 'Not a number'
+    },
+    {
+        // Question 1
+        Question: 'Which syntax gets the first element from an array?',
+        choices: ['unshift()', 'shift()', 'pop()', 'get()'],
+        correctAnswer: 'unshift()'
+    },
+    {   // Question 2
+        Question: 'What is the difference between == and === operators?',
+        choices: ['Compare values', 'Equal sign', 'Snake', 'Compare both value and types'],
+        correctAnswer: 'Compare both value and types'
+    },
+    {   // Question 3
+        Question: 'Which file is best used to style elements?',
+        choices: ['script.js', 'index.html', 'me.css', 'me.scc'],
+        correctAnswer: 'me.css'
+    },
+    {
+        // Question 4
+        Question: 'Which key brings up vscode in github?',
+        choices: ['G', 'V', '.', 'C'],
+        correctAnswer: '.'
+    }
+
 ]
-
-function getQuestions(questionIndex) {
-
-}
-
 
 
 // Gets DOM and creates variables for questions
-var questionContainer = document.querySelector('.Questions-container');
+var questionContainer = document.querySelector('#questionsContainer');
 var questionEl = document.getElementById('questionEl')
 var choice1 = document.querySelector('#choice1')
 var choice2 = document.getElementById('choice2')
-var choice3 = document.getElementById('choice3') 
+var choice3 = document.getElementById('choice3')
 var choice4 = document.getElementById('choice4')
+var allChoices = document.getElementsByClassName('choice')
+var inputName = document.querySelector('.inputName')
+
+// Time and score variables
+var timer = document.getElementById('timer');
+var secondsLeft = 75;
 var questionLength = questions.length;
 var questionIndex = 0;
 var score = 0;
+var userName = finallink.value;
+
+// Gets question from array
+questionContainer.addEventListener('click', function (e) {
+
+    var choiceClicked = e.target.innerText;
+    if (choiceClicked === questions[questionIndex].correctAnswer) {
+        console.log('corectAnswer')
+        score = score + 10;
+    } else {
+        secondsLeft = secondsLeft - 10;
+        alert('Incorrect')
+    }
+    questionIndex++;
+    nextQuestion();
+})
+// reset button if game is over
+resetbtn.addEventListener('click', function () {
+    final.style.display = 'none';
+    questionContainer.style.display = 'none';
+    mainContainer.style.display = 'block';
+    containerBtn.style.display = 'block';
+    finallink.value = '';
+    questionIndex = 0;
+    secondsLeft = 75;
+//test
+    mainContainer.style.display = 'block';
+    containerBtn.style.display = 'block';
+    questionEl.innerText = questions[questionIndex].Question;
+    choice1.textContent = questions[questionIndex].choices[0];
+    choice2.textContent = questions[questionIndex].choices[1];
+    choice3.textContent = questions[questionIndex].choices[2];
+    choice4.textContent = questions[questionIndex].choices[3];
+    // time starts functoin
+    setTime();
+    
+    
+
+})
 
 
+// Starts next question
+function nextQuestion() {
+    if (questionIndex === questionLength) {
+        alert(`GAME OVER your score is ${score}`)
+        final.style.display = 'block'
+        var currentHighscore;
+        if (localStorage.getItem('HS')) {
+            currentHighscore = localStorage.getItem('HS');
+            
+        } else {
+            currentHighscore = 0;
+        }
+        finalbtn.addEventListener('click', function () {
 
+            if (currentHighscore < score) {
+                localStorage.setItem('Highscore', `${finallink.value}: ${score}`)
+                localStorage.setItem('HS', `${score}`);
+                return alert(`You have set a new High Score! ${localStorage.getItem("Highscore")} `)
+    
+            }
+            
+            localStorage.setItem('NewScore', `${finallink.value}: ${score}`);
+            inputName.innerText = localStorage.getItem('Highscore', `${finallink.value}: ${score}`)
+            return alert(`${finallink.value}: ${score}`);xw
+        })
+        //
+    } else {
+        questionEl.innerText = questions[questionIndex].Question;
+        choice1.textContent = questions[questionIndex].choices[0];
+        choice2.textContent = questions[questionIndex].choices[1];
+        choice3.textContent = questions[questionIndex].choices[2];
+        choice4.textContent = questions[questionIndex].choices[3];
+    }
+
+}
+highScore.innerText = `HighScore ${localStorage.getItem('HS') ? localStorage.getItem('HS'):'0'}`;
 
 // Function that starts quiz and first question appears
-function startQuiz(){
+function startQuiz() {
     questionContainer.style.display = 'block';
     mainContainer.style.display = 'none';
     containerBtn.style.display = 'none';
-    questionIndex = 0;
-
+    questionEl.innerText = questions[questionIndex].Question;
+    choice1.textContent = questions[questionIndex].choices[0];
+    choice2.textContent = questions[questionIndex].choices[1];
+    choice3.textContent = questions[questionIndex].choices[2];
+    choice4.textContent = questions[questionIndex].choices[3];
+    // time starts functoin
     setTime();
-    setQuestion();
-    checkAnswer();
-}
-
-function setQuestion(id) {
-    if (id < questions.length) {
-        questionEl.textContent = questions[id].Question;
-        choice1.textContent = questions[id].choices[0];
-        choice2.textContent = questions[id].choices[1];
-        choice3.textContent = questions[id].choices[2];
-        choice4.textContent = questions[id].choices[3];
-
-    }
-}
-
-function checkAnswer(event) {
-    event.preventDefault();
-
-    if (questions[questionIndex].correctAnswer === event.target.value) {
-    
-    } else if (questions[questionIndex].correctAnswer !== event.target.value) {
-        secondsLeft = secondsLeft - 10;
-    }
-    
 }
 
 
 
-
-
-
-// Time variables
-var timer = document.getElementById('timer');
-var secondsLeft = 75;
 
 // Function to start timer
 function setTime() {
-    var timerInterval = setInterval(function() {
-    secondsLeft--;
-    timer.textContent = secondsLeft;
+    var timerInterval = setInterval(function () {
+        secondsLeft--;
+        timer.textContent = secondsLeft;
 
-    if (secondsLeft === 0 || questionIndex === questions.length) {
-        clearInterval(timerInterval);   
-        questionContainer.style.display = 'none' 
-    }
-}, 1000)
+        if (secondsLeft === 0 || questionIndex === questions.length) {
+            clearInterval(timerInterval);
+            questionContainer.style.display = 'none'
+            final.style.display = 'block';
+        }
+    }, 1000)
 }
 
 
 // When button is clicked, timer starts and first questions appears
 startbtn.addEventListener('click', function () {
-            startQuiz()
-    
+    // Starts quiz
+    startQuiz()
 
-
-    }
+}
 
 );
-
-
-
-
-
-
-
-
-
-// GIVEN I am taking a code quiz
-// WHEN I click the start button
-// Step 1: THEN a timer starts and I am presented with a question
-
-
-
-
-
-
-// WHEN I answer a question
-// Step 2: THEN I am presented with another question
-
-
-
-
-// WHEN I answer a question incorrectly
-// Step 3: THEN time is subtracted from the clock
-
-
-
-
-
-
-// WHEN all questions are answered or the timer reaches 0
-// Step 4: THEN the game is over
-
-
-
-
-
-
-
-
-
-// WHEN the game is over
-// Step 5: THEN I can save my initials and my score
-
-
