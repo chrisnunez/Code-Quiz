@@ -21,7 +21,8 @@ ul {
 
 #timer {
     color: #F9DEC9;
-    font-size: 1.5rem;
+    font-size: 5rem;
+    margin-right: 20px;
 }
 /* Center content and text weight. */
 .mainContainer h1, p{
@@ -83,5 +84,6 @@ button:hover {
 
 #final input {
     height: 50px;
-    width: 150;
+    width: 150px;
+    font-weight: bold;
 }

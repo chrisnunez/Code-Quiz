@@ -87,7 +87,7 @@ resetbtn.addEventListener('click', function () {
     finallink.value = '';
     questionIndex = 0;
     secondsLeft = 75;
-//test
+//Display beginning
     mainContainer.style.display = 'block';
     containerBtn.style.display = 'block';
     questionEl.innerText = questions[questionIndex].Question;
@@ -95,15 +95,14 @@ resetbtn.addEventListener('click', function () {
     choice2.textContent = questions[questionIndex].choices[1];
     choice3.textContent = questions[questionIndex].choices[2];
     choice4.textContent = questions[questionIndex].choices[3];
-    // time starts functoin
+    // time starts function
     setTime();
     
     
-
 })
 
 
-// Starts next question
+// Starts next question and sets local storage
 function nextQuestion() {
     if (questionIndex === questionLength) {
         alert(`GAME OVER your score is ${score}`)
@@ -118,17 +117,18 @@ function nextQuestion() {
         finalbtn.addEventListener('click', function () {
 
             if (currentHighscore < score) {
+                
                 localStorage.setItem('Highscore', `${finallink.value}: ${score}`)
                 localStorage.setItem('HS', `${score}`);
                 return alert(`You have set a new High Score! ${localStorage.getItem("Highscore")} `)
-    
+                
             }
-            
+            inputName.innerText = localStorage.setItem('Highscore', `${finallink.value}: ${score}`);
             localStorage.setItem('NewScore', `${finallink.value}: ${score}`);
-            inputName.innerText = localStorage.getItem('Highscore', `${finallink.value}: ${score}`)
-            return alert(`${finallink.value}: ${score}`);xw
+            inputName.innerText = localStorage.getItem('NewScore', `${finallink.value}: ${score}`)
+            return alert(`${finallink.value}: ${score}`);
         })
-        //
+        // Display questions.
     } else {
         questionEl.innerText = questions[questionIndex].Question;
         choice1.textContent = questions[questionIndex].choices[0];
@@ -140,7 +140,7 @@ function nextQuestion() {
 }
 highScore.innerText = `HighScore ${localStorage.getItem('HS') ? localStorage.getItem('HS'):'0'}`;
 
-// Function that starts quiz and first question appears
+// Function that starts quiz and first question appears.
 function startQuiz() {
     questionContainer.style.display = 'block';
     mainContainer.style.display = 'none';
